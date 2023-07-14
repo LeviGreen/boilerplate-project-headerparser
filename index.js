@@ -3,6 +3,7 @@
 
 // init project
 require('dotenv').config();
+bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
@@ -22,6 +23,17 @@ app.get('/', function (req, res) {
 // your first API endpoint...
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
+});
+
+app.use(bodyParser.urlencoded({extended: true}))
+
+app.get('/api/whoami', function (req, res) {
+  json_res = {
+    ipaddress: req.ip,
+    language: req.headers["accept-language"],
+    software: req.headers["user-agent"]
+  }
+  res.json(json_res);
 });
 
 // listen for requests :)
